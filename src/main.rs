@@ -3,7 +3,7 @@ use std::io;
 fn main() {
     //************************************************************************************ */
     //      number of blocks of the chocolate bar which are cut into exactly two pieces of 
-    //      equal area = gcd iff   (m/gcd) is odd   AND   (m/gcd) is odd
+    //      equal area = gcd iff   (m/gcd) is odd   AND   (n/gcd) is odd
     //************************************************************************************ */
 
     let input: Vec<String> = read_line_vec_string();
@@ -37,22 +37,22 @@ fn main() {
                 if m_is_reduced_flag {
                     let last_digt_m: char =
                         input[0].chars().skip(input[0].len() - 1).next().unwrap();
-                    m = last_digt_m.to_digit(10).unwrap() as u64; // obs shadowing m
+                    m = last_digt_m.to_digit(10).unwrap() as u64; // NOTICE: shadowing m
                 }
 
-                // iff (m/gcd) is odd    AND    (m/gcd) is odd ==> the num of blocks that "cutted in halv" = gcd; Otherwise zero.
-                // when gcd is odd it's efficient to just check if both(m and n) are odd
+                // iff (m/gcd) is odd    AND    (n/gcd) is odd ==> the num of blocks that "cutted in halv" = gcd; Otherwise zero.
+                // when gcd is odd it's efficient to just check if both(m and n) are odd, becuase odd/odd=odd
+                // (1 & any_odd_num) is equal to 1
                 is_nums_div_gcd_odd = (1 & m == 1) && (1 & n == 1);
             } else {
-                // if gcd is even
-                // niether "Unreduced" m or n can be odd, because odd / (an even gcd) != int
-                // so m and n are even, but (even / even = ??):
-                //      iff (m/gcd) is odd    AND    (m/gcd) is odd ==> the num of blocks that "cutted in halv" = gcd; Otherwise zero.
+                // if gcd is even, then niether ("Unreduced" m) nor n can be odd, because odd / (an even gcd) != int
+                // so m and n are even, but (even / even = unknown):
+                //      iff (m/gcd) is odd    AND    (n/gcd) is odd ==> the num of blocks that "cutted in halv" = gcd; Otherwise zero.
                 let mut m = m ;
 
                 if m_is_reduced_flag {
-                    // we know that g,m and n are even, and we have to perform (m/g) and n/g to check if both of thiers res are odd
-                    m = long_num_as_str_division(&input[0], 4); // obs shadowing m
+                    // we know that g,m and n are even, and we have to perform (m/g) and (n/g) to assert that both will result in odd numbers
+                    m = long_num_as_str_division(&input[0], 4); // NOTICE: shadowing m
                 }
                 is_nums_div_gcd_odd = (1 & (m / g ) == 1) && (1 & (n / g) == 1);
             }
