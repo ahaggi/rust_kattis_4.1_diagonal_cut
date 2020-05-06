@@ -32,8 +32,9 @@ fn main() {
 
             // check if is_nums_div_gcd_odd
             if is_gcd_odd {
+                
                 let mut m = m;
-
+                
                 if m_is_reduced_flag {
                     let last_digt_m: char =
                         input[0].chars().skip(input[0].len() - 1).next().unwrap();
